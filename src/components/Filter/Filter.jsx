@@ -6,10 +6,10 @@ class Filter extends Component {
   state = { filter: '' };
 
   handleChange = event => {
-    this.setState(
-      { filter: event.target.value },
-      this.props.onchange(this.state.filter)
-    );
+    this.setState({ filter: event.target.value });
+    setTimeout(() => {
+      this.props.onchange(this.state.filter);
+    }, 1);
   };
 
   render() {
@@ -22,6 +22,10 @@ class Filter extends Component {
     );
   }
 }
+
+// function Filter({ value, onChange }) {
+//   return <input type="text" value={value} />;
+// }
 
 export default Filter;
 

@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
 import css from './ContactForm.module.css';
 
@@ -6,9 +7,9 @@ class ContactForm extends Component {
   state = { id: '', name: '', number: '' };
 
   handleChange = event => {
-    console.dir(this.props.contacts);
     this.setState({ [event.currentTarget.name]: event.currentTarget.value });
-    this.setState({ id: `id-${this.props.contacts.length + 1}` });
+    // this.setState({ id: `id-${this.props.contacts.length + 1}` });
+    this.setState({ id: nanoid() });
   };
 
   handleSubmit = e => {
