@@ -15,31 +15,30 @@ export class App extends Component {
   };
 
   formSubmitHandler = data => {
-    // console.log(data);
     this.setState(prevState => ({ contacts: [...prevState.contacts, data] }));
   };
 
   filterHandler = event => {
-    this.setState({ filter: event });
-
-    const filterUpdateContacts = this.state.contacts.filter(contact => {
-      return contact.name
-        .toLowerCase()
-        .includes(this.state.filter.toLowerCase());
+    this.setState(() => {
+      return { filter: event };
     });
+  };
 
-    setTimeout(() => {
-      // this.setState(prevState => ({
-      //   contacts: [...prevState.contacts, filterUpdateContacts],
-      // }));
-      this.setState(prevState => ({
-        contacts: filterUpdateContacts,
-      }));
-    }, 1);
+  deleteContacts = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(e => e.id !== id),
+    }));
+
+    this.state.filter === ''
+      ? this.setState(prevState => ({
+          contacts: prevState.contacts.filter(e => e.id !== id),
+        }))
+      : this.setState(prevState => ({
+          filter: prevState.filter.filter(e => e.id !== id),
+        }));
   };
 
   render() {
-    // console.log(this.state.filter);
     return (
       <>
         <h1>Phonebook</h1>
@@ -48,12 +47,13 @@ export class App extends Component {
           onSubmit={this.formSubmitHandler}
         />
         <h2>Contacts</h2>
-        <Filter
-          contacts={this.state.contacts}
-          onchange={this.filterHandler}
-          value={this.state.filter}
+        <Filter contacts={this.state.contacts} onchange={this.filterHandler} />
+        <ContactList
+          contactsList={
+            this.state.filter === '' ? this.state.contacts : this.state.filter
+          }
+          onClick={this.deleteContacts}
         />
-        <ContactList contactsList={this.state.contacts} />
       </>
     );
   }

@@ -1,14 +1,26 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import css from './Filter.module.css';
+// import css from './Filter.module.css';
 
 class Filter extends Component {
-  state = { filter: '' };
+  state = {
+    filter: '',
+    filterContact: '',
+  };
 
   handleChange = event => {
     this.setState({ filter: event.target.value });
+
     setTimeout(() => {
-      this.props.onchange(this.state.filter);
+      const filterUpdateContacts = this.props.contacts.filter(contact => {
+        return contact.name
+          .toLowerCase()
+          .includes(this.state.filter.toLowerCase());
+      });
+      this.setState({ filterContact: filterUpdateContacts });
+      setTimeout(() => {
+        this.props.onchange(this.state.filterContact);
+      }, 1);
     }, 1);
   };
 
@@ -23,10 +35,9 @@ class Filter extends Component {
   }
 }
 
-// function Filter({ value, onChange }) {
-//   return <input type="text" value={value} />;
-// }
-
 export default Filter;
 
-Filter.propTypes = {};
+Filter.propTypes = {
+  contacts: PropTypes.array.isRequired,
+  onchange: PropTypes.func.isRequired,
+};
