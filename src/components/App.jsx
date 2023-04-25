@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import ContactForm from './ContactForm';
 import Filter from './Filter';
-
 import ContactList from './ContactList';
 
 export class App extends Component {
