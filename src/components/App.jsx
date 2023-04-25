@@ -14,8 +14,15 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    this.setState({ contacts: JSON.parse(localStorage.getItem('contacts')) });
+  }
+
   formSubmitHandler = data => {
     this.setState(prevState => ({ contacts: [...prevState.contacts, data] }));
+    setTimeout(() => {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }, 1);
   };
 
   filterHandler = event => {
@@ -30,12 +37,21 @@ export class App extends Component {
     }));
 
     this.state.filter === ''
-      ? this.setState(prevState => ({
-          contacts: prevState.contacts.filter(e => e.id !== id),
-        }))
+      ? this.setState(
+          prevState => (
+            {
+              contacts: prevState.contacts.filter(e => e.id !== id),
+            },
+            console.log(this.state.contacts)
+          )
+        )
       : this.setState(prevState => ({
           filter: prevState.filter.filter(e => e.id !== id),
         }));
+
+    setTimeout(() => {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }, 1);
   };
 
   render() {
