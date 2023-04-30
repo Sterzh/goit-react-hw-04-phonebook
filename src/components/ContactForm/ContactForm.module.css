@@ -2,9 +2,13 @@
   display: flex;
   flex-direction: column;
   width: 300px;
-  gap: 10px;
+  gap: 15px;
 }
 
 .contactFormButton {
   width: 100px;
+}
+
+.inputForm {
+  margin-left: 5px;
 }

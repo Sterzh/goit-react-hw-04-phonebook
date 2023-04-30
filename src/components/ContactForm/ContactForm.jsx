@@ -46,6 +46,7 @@ class ContactForm extends Component {
             required
             value={this.state.name}
             onChange={this.handleChange}
+            className={css.inputForm}
           />
         </label>
         <label htmlFor="">
@@ -58,6 +59,7 @@ class ContactForm extends Component {
             required
             value={this.state.number}
             onChange={this.handleChange}
+            className={css.inputForm}
           />
         </label>
         <button className={css.contactFormButton} type="submit">
