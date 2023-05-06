@@ -18,9 +18,7 @@ export class App extends Component {
     const downloadContacts = JSON.parse(localStorage.getItem('contacts'));
     if (downloadContacts !== null) {
       this.setState({ contacts: downloadContacts });
-      setTimeout(() => {
-        console.log(this.state);
-      }, 1);
+      setTimeout(() => {}, 1);
     }
   }
 
