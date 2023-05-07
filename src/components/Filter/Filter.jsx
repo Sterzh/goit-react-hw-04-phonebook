@@ -1,41 +1,28 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 // import css from './Filter.module.css';
 
-class Filter extends Component {
-  state = {
-    filter: '',
-    filterContact: '',
+export default function Filter(props) {
+  const [filter, setFilter] = useState('');
+  const [filterContact, setFilterContact] = useState('');
+
+  const handleChange = event => {
+    setFilter(event.target.value);
   };
 
-  handleChange = event => {
-    this.setState({ filter: event.target.value });
+  useEffect(() => {
+    const filterUpdateContacts = props.contacts.filter(contact => {
+      return contact.name.toLowerCase().includes(filter.toLowerCase());
+    });
+    setFilterContact(filterUpdateContacts);
+  }, [filter, props.contacts]);
 
-    setTimeout(() => {
-      const filterUpdateContacts = this.props.contacts.filter(contact => {
-        return contact.name
-          .toLowerCase()
-          .includes(this.state.filter.toLowerCase());
-      });
-      this.setState({ filterContact: filterUpdateContacts });
-      setTimeout(() => {
-        this.props.onchange(this.state.filterContact);
-      }, 1);
-    }, 1);
-  };
+  useEffect(() => {
+    props.onchange(filterContact);
+  }, [filterContact, props]);
 
-  render() {
-    return (
-      <input
-        type="text"
-        onChange={this.handleChange}
-        value={this.state.filter}
-      />
-    );
-  }
+  return <input type="text" onChange={handleChange} value={filter} />;
 }
-
-export default Filter;
 
 Filter.propTypes = {
   contacts: PropTypes.array.isRequired,
